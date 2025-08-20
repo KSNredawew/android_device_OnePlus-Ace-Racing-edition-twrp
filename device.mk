@@ -26,8 +26,5 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
      android.hardware.fastboot@1.0-impl-mtk
 
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    libz 
-
 PRODUCT_PACKAGES += \
     update_engine_sideload
