@@ -1,0 +1,94 @@
+# TWRP Configuration Flags for MediaTek MT6895/MT6779
+# Mount point          fstype    device                                 flags
+
+## Boot & Critical Partitions
+/boot                 emmc      /dev/block/by-name/boot              flags=display="Boot";backup=1;flashimg=1;slotselect
+/recovery             emmc      /dev/block/by-name/recovery          flags=display="Recovery";backup=1;flashimg=1
+/dtbo                 emmc      /dev/block/by-name/dtbo              flags=display="DTBO";backup=1;flashimg=1;slotselect
+/odmdtbo              emmc      /dev/block/by-name/odmdtbo           flags=display="ODM DTBO";backup=1;flashimg=1;slotselect
+/boot_para            emmc      /dev/block/by-name/boot_para         flags=display="Boot Parameters"
+/logo                 emmc      /dev/block/by-name/logo              flags=display="Logo";backup=1
+
+## Security & Verification
+/vbmeta               emmc      /dev/block/by-name/vbmeta            flags=display="VBMeta";slotselect
+/vbmeta_system        emmc      /dev/block/by-name/vbmeta_system     flags=display="VBMeta System";slotselect
+/vbmeta_vendor        emmc      /dev/block/by-name/vbmeta_vendor     flags=display="VBMeta Vendor";slotselect
+/seccfg               emmc      /dev/block/by-name/seccfg            flags=display="Security Config"
+/tee1                 emmc      /dev/block/by-name/tee1              flags=display="TEE1";slotselect
+/tee2                 emmc      /dev/block/by-name/tee2              flags=display="TEE2";slotselect
+
+## Firmware & Modem
+/md1img               emmc      /dev/block/by-name/md1img            flags=display="Modem Image"
+/md1dsp               emmc      /dev/block/by-name/md1dsp            flags=display="Modem DSP"
+/md1arm7              emmc      /dev/block/by-name/md1arm7           flags=display="Modem ARM7"
+/md3img               emmc      /dev/block/by-name/md3img            flags=display="Modem Image 3"
+/spmfw                emmc      /dev/block/by-name/spmfw             flags=display="SPM Firmware"
+/audio_dsp            emmc      /dev/block/by-name/audio_dsp         flags=display="Audio DSP"
+/cam_vpu1             emmc      /dev/block/by-name/cam_vpu1          flags=display="Camera VPU1"
+/cam_vpu2             emmc      /dev/block/by-name/cam_vpu2          flags=display="Camera VPU2"
+/cam_vpu3             emmc      /dev/block/by-name/cam_vpu3          flags=display="Camera VPU3"
+/gz1                  emmc      /dev/block/by-name/gz1               flags=display="GZ1"
+/gz2                  emmc      /dev/block/by-name/gz2               flags=display="GZ2"
+/scp1                 emmc      /dev/block/by-name/scp1              flags=display="SCP1";slotselect
+/scp2                 emmc      /dev/block/by-name/scp2              flags=display="SCP2";slotselect
+/sspm_1               emmc      /dev/block/by-name/sspm_1            flags=display="SSPM1";slotselect
+/sspm_2               emmc      /dev/block/by-name/sspm_2            flags=display="SSPM2";slotselect
+/mcupm_1              emmc      /dev/block/by-name/mcupm_1           flags=display="MCUPM1";slotselect
+/mcupm_2              emmc      /dev/block/by-name/mcupm_2           flags=display="MCUPM2";slotselect
+
+## System & Logical Partitions
+/system               erofs     system                               flags=display="System";logical;backup=1;slotselect
+/system               ext4      system                               flags=display="System";logical;backup=1;slotselect
+/system_ext           erofs     system_ext                           flags=display="SystemExt";logical;backup=1;slotselect
+/system_ext           ext4      system_ext                           flags=display="SystemExt";logical;backup=1;slotselect
+/vendor               erofs     vendor                               flags=display="Vendor";logical;backup=1;slotselect
+/vendor               ext4      vendor                               flags=display="Vendor";logical;backup=1;slotselect
+/product              erofs     product                              flags=display="Product";logical;backup=1;slotselect
+/product              ext4      product                              flags=display="Product";logical;backup=1;slotselect
+/odm                  erofs     odm                                  flags=display="ODM";logical;backup=1;slotselect
+/odm                  ext4      odm                                  flags=display="ODM";logical;backup=1;slotselect
+/my_product           erofs     my_product                           flags=display="My Product";logical;backup=1;slotselect
+/my_product           ext4      my_product                           flags=display="My Product";logical;backup=1;slotselect
+/my_engineering       erofs     my_engineering                       flags=display="My Engineering";logical;backup=1;slotselect
+/my_engineering       ext4      my_engineering                       flags=display="My Engineering";logical;backup=1;slotselect
+/my_company           erofs     my_company                           flags=display="My Company";logical;backup=1;slotselect
+/my_company           ext4      my_company                           flags=display="My Company";logical;backup=1;slotselect
+/my_carrier           erofs     my_carrier                           flags=display="My Carrier";logical;backup=1;slotselect
+/my_carrier           ext4      my_carrier                           flags=display="My Carrier";logical;backup=1;slotselect
+/my_region            erofs     my_region                            flags=display="My Region";logical;backup=1;slotselect
+/my_region            ext4      my_region                            flags=display="My Region";logical;backup=1;slotselect
+/my_heytap            erofs     my_heytap                            flags=display="My Heytap";logical;backup=1;slotselect
+/my_heytap            ext4      my_heytap                            flags=display="My Heytap";logical;backup=1;slotselect
+/my_stock             erofs     my_stock                             flags=display="My Stock";logical;backup=1;slotselect
+/my_stock             ext4      my_stock                             flags=display="My Stock";logical;backup=1;slotselect
+/my_preload           erofs     my_preload                           flags=display="My Preload";logical;backup=1;slotselect
+/my_preload           ext4      my_preload                           flags=display="My Preload";logical;backup=1;slotselect
+/my_bigball           erofs     my_bigball                           flags=display="My Bigball";logical;backup=1;slotselect
+/my_bigball           ext4      my_bigball                           flags=display="My Bigball";logical;backup=1;slotselect
+/my_manifest          erofs     my_manifest                          flags=display="My Manifest";logical;backup=1;slotselect
+/my_manifest          ext4      my_manifest                          flags=display="My Manifest";logical;backup=1;slotselect
+
+## Data & Cache
+/data                 f2fs      /dev/block/by-name/userdata          flags=display="User Data";wipeingui;backup=1;fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized;keydirectory=/metadata/vold/metadata_encryption
+/cache                ext4      /dev/block/by-name/oplusreserve2     flags=display="Cache";wipeingui
+/metadata             ext4      /dev/block/by-name/metadata          flags=display="Metadata";wipeingui
+
+## Persistent & Misc
+/misc                 emmc      /dev/block/by-name/misc              flags=display="Misc"
+/nvram                emmc      /dev/block/by-name/nvram             flags=display="NVRAM"
+/proinfo              emmc      /dev/block/by-name/proinfo           flags=display="Proinfo"
+/frp                  emmc      /dev/block/by-name/frp               flags=display="FRP"
+/expdb                emmc      /dev/block/by-name/expdb             flags=display="EXPDB"
+/reserve2             emmc      /dev/block/by-name/reserve2          flags=display="Reserve2"
+/oplusreserve         ext4      /dev/block/by-name/oplusreserve2     flags=display="OPPO Reserve"
+
+## Vendor Mounts
+/protect_f            ext4      /dev/block/by-name/protect1          flags=display="Protect F"
+/protect_s            ext4      /dev/block/by-name/protect2          flags=display="Protect S"
+/nvdata               ext4      /dev/block/by-name/nvdata            flags=display="NV Data"
+/nvcfg                ext4      /dev/block/by-name/nvcfg             flags=display="NV Config"
+/cdt_engineering      emmc      /dev/block/by-name/cdt_engineering   flags=display="CDT Engineering"
+
+## External Storage
+/external_sd          vfat      /dev/block/mmcblk0p1                 flags=display="SD Card";storage;removable;wipeingui
+/usb_otg              vfat      /dev/block/sdd1                      flags=display="USB OTG";storage;removable;wipeingui

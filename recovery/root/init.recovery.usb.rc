@@ -1,0 +1,128 @@
+# Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met
+#      Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#      Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation andor other materials provided with the distribution.
+#      Neither the name of The Linux Foundation nor
+#       the names of its contributors may be used to endorse or promote
+#       products derived from this software without specific prior written
+#       permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+on fs && propertysys.usb.configfs=1
+    mount configfs none config
+    mkdir configusb_gadgetg1 0770 shell shell
+    write configusb_gadgetg1idVendor 0x18D1
+    mkdir configusb_gadgetg1strings0x409 0770
+    write configusb_gadgetg1strings0x409serialnumber ${ro.serialno}
+    write configusb_gadgetg1strings0x409manufacturer ${ro.product.manufacturer}
+    write configusb_gadgetg1strings0x409product ${ro.product.model}
+    mkdir configusb_gadgetg1functionsffs.adb
+    mkdir configusb_gadgetg1functionsffs.fastboot
+    mkdir configusb_gadgetg1functionsffs.mtp
+    mkdir configusb_gadgetg1configsb.1 0777 shell shell
+    mkdir configusb_gadgetg1configsb.1strings0x409 0770 shell shell
+
+on fs && propertysys.usb.configfs=0
+    write sysclassandroid_usbandroid0f_ffsaliases adb,fastboot
+    write sysclassandroid_usbandroid0idVendor 18D1
+    write sysclassandroid_usbandroid0iManufacturer ${ro.product.manufacturer}
+    write sysclassandroid_usbandroid0iProduct ${ro.product.model}
+    write sysclassandroid_usbandroid0iSerial ${ro.serialno}
+
+on fs
+    mount pstore pstore sysfspstore
+    mkdir devusb-ffs 0770 shell shell
+    mkdir devusb-ffsadb 0770 shell shell
+    mkdir devusb-ffsmtp 0770 mtp mtp    
+    mount functionfs adb devusb-ffsadb uid=2000,gid=2000
+    mkdir devusb-ffsfastboot 0770 system system
+    mount functionfs fastboot devusb-ffsfastboot rmode=0770,fmode=0660,uid=1000,gid=1000
+    mount functionfs mtp devusb-ffsmtp uid=2000,gid=2000
+
+on propertysys.usb.config=adb
+    start adbd
+
+on propertysys.usb.config=mtp,adb
+    start adbd
+
+on propertysys.usb.config=fastboot
+    start fastbootd
+
+on propertysys.usb.config=none && propertysys.usb.configfs=0
+    stop adbd
+    stop fastboot
+    write sysclassandroid_usbandroid0enable 0
+    setprop sys.usb.state ${sys.usb.config}
+
+on propertysys.usb.config=adb && propertysys.usb.configfs=0
+    write sysclassandroid_usbandroid0idProduct D001
+    write sysclassandroid_usbandroid0functions adb
+    write sysclassandroid_usbandroid0enable 1
+    setprop sys.usb.state ${sys.usb.config}
+
+on propertysys.usb.config=sideload && propertysys.usb.configfs=0
+    write sysclassandroid_usbandroid0idProduct D001
+    write sysclassandroid_usbandroid0functions adb
+    write sysclassandroid_usbandroid0enable 1
+    setprop sys.usb.state ${sys.usb.config}
+
+on propertysys.usb.config=fastboot && propertysys.usb.configfs=0
+    write sysclassandroid_usbandroid0idProduct 4EE0
+    write sysclassandroid_usbandroid0functions fastboot
+    write sysclassandroid_usbandroid0enable 1
+    setprop sys.usb.state ${sys.usb.config}
+
+# Configfs triggers
+on propertysys.usb.config=none && propertysys.usb.configfs=1
+    write configusb_gadgetg1UDC none
+    stop adbd
+    stop fastbootd
+    setprop sys.usb.ffs.ready 0
+    rm configusb_gadgetg1configsb.1f1
+    setprop sys.usb.state ${sys.usb.config}
+
+on propertysys.usb.config=sideload && propertysys.usb.ffs.ready=1 && propertysys.usb.configfs=1
+    write configusb_gadgetg1idProduct 0xD001
+    write configusb_gadgetg1configsb.1strings0x409configuration adb
+    symlink configusb_gadgetg1functionsffs.adb configusb_gadgetg1configsb.1f1
+    write configusb_gadgetg1UDC ${sys.usb.controller}
+    setprop sys.usb.state ${sys.usb.config}
+
+on propertysys.usb.config=adb && propertysys.usb.ffs.ready=1 && propertysys.usb.configfs=1
+    write configusb_gadgetg1idProduct 0xD001
+    write configusb_gadgetg1configsb.1strings0x409configuration adb
+    symlink configusb_gadgetg1functionsffs.adb configusb_gadgetg1configsb.1f1
+    write configusb_gadgetg1UDC ${sys.usb.controller}
+    setprop sys.usb.state ${sys.usb.config}
+
+on propertysys.usb.config=mtp,adb && propertysys.usb.ffs.ready=1 && propertysys.usb.configfs=1
+    write configusb_gadgetg1idProduct 0x6860
+    write configusb_gadgetg1configsb.1strings0x409configuration mtp,adb
+    symlink configusb_gadgetg1functionsffs.adb configusb_gadgetg1configsb.1f1
+    symlink configusb_gadgetg1functionsffs.mtp configusb_gadgetg1configsb.1ffs.mtp
+    write configusb_gadgetg1UDC ${sys.usb.controller}
+    setprop sys.usb.state ${sys.usb.config}
+
+on propertysys.usb.config=fastboot && propertysys.usb.ffs.ready=1 && propertysys.usb.configfs=1
+    write configusb_gadgetg1idProduct 0x4EE0
+    write configusb_gadgetg1configsb.1strings0x409configuration fastboot
+    symlink configusb_gadgetg1functionsffs.fastboot configusb_gadgetg1configsb.1f1
+    write configusb_gadgetg1UDC ${sys.usb.controller}
+    setprop sys.usb.state ${sys.usb.config}
