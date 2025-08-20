@@ -13,6 +13,19 @@ BUILD_BROKEN_DUP_RULES := true
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
+# A/B
+AB_OTA_UPDATER := true
+AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    system \
+    product \
+    system_ext \
+    vendor \
+    vbmeta_system \
+    odm \
+    vbmeta_vendor
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
