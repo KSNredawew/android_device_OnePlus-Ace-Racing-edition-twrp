@@ -1,4 +1,4 @@
-# TWRP Configuration Flags for MediaTek MT6895/MT6779
+# TWRP Configuration Flags for MediaTek MT6895
 # Mount point          fstype    device                                 flags
 
 ## Boot & Critical Partitions
@@ -37,26 +37,26 @@
 /mcupm_2              emmc      /dev/block/by-name/mcupm_2           flags=display="MCUPM2";backup=0;slotselect
 
 ## System & Logical Partitions
-/system               erofs     /dev/block/by-name/system            flags=display="System";logical;backup=1;slotselect;ro
-/system_ext           erofs     /dev/block/by-name/system_ext        flags=display="SystemExt";logical;backup=1;slotselect;ro
-/vendor               erofs     /dev/block/by-name/vendor            flags=display="Vendor";logical;backup=1;slotselect;ro
-/product              erofs     /dev/block/by-name/product           flags=display="Product";logical;backup=1;slotselect;ro
-/odm                  erofs     /dev/block/by-name/odm               flags=display="ODM";logical;backup=1;slotselect;ro
-/my_product           erofs     /dev/block/by-name/my_product         flags=display="My Product";logical;backup=1;slotselect;ro
-/my_engineering       erofs     /dev/block/by-name/my_engineering    flags=display="My Engineering";logical;backup=1;slotselect;ro
-/my_company           erofs     /dev/block/by-name/my_company        flags=display="My Company";logical;backup=1;slotselect;ro
-/my_carrier           erofs     /dev/block/by-name/my_carrier        flags=display="My Carrier";logical;backup=1;slotselect;ro
-/my_region            erofs     /dev/block/by-name/my_region         flags=display="My Region";logical;backup=1;slotselect;ro
-/my_heytap            erofs     /dev/block/by-name/my_heytap         flags=display="My Heytap";logical;backup=1;slotselect;ro
-/my_stock             erofs     /dev/block/by-name/my_stock          flags=display="My Stock";logical;backup=1;slotselect;ro
-/my_preload           erofs     /dev/block/by-name/my_preload        flags=display="My Preload";logical;backup=1;slotselect;ro
-/my_bigball           erofs     /dev/block/by-name/my_bigball        flags=display="My Bigball";logical;backup=1;slotselect;ro
-/my_manifest          erofs     /dev/block/by-name/my_manifest       flags=display="My Manifest";logical;backup=1;slotselect;ro
+/system               erofs     /dev/block/mapper/system               flags=display="System";logical;backup=1;slotselect;ro
+/system_ext           erofs     /dev/block/mapper/system_ext           flags=display="SystemExt";logical;backup=1;slotselect;ro
+/vendor               erofs     /dev/block/mapper/vendor               flags=display="Vendor";logical;backup=1;slotselect;ro
+/product              erofs     /dev/block/mapper/product              flags=display="Product";logical;backup=1;slotselect;ro
+/odm                  erofs     /dev/block/mapper/odm                  flags=display="ODM";logical;backup=1;slotselect;ro
+/my_product           erofs     /dev/block/mapper/my_product           flags=display="My Product";logical;backup=1;slotselect;ro
+/my_engineering       erofs     /dev/block/mapper/my_engineering       flags=display="My Engineering";logical;backup=1;slotselect;ro
+/my_company           erofs     /dev/block/mapper/my_company           flags=display="My Company";logical;backup=1;slotselect;ro
+/my_carrier           erofs     /dev/block/mapper/my_carrier           flags=display="My Carrier";logical;backup=1;slotselect;ro
+/my_region            erofs     /dev/block/mapper/my_region            flags=display="My Region";logical;backup=1;slotselect;ro
+/my_heytap            erofs     /dev/block/mapper/my_heytap            flags=display="My Heytap";logical;backup=1;slotselect;ro
+/my_stock             erofs     /dev/block/mapper/my_stock             flags=display="My Stock";logical;backup=1;slotselect;ro
+/my_preload           erofs     /dev/block/mapper/my_preload           flags=display="My Preload";logical;backup=1;slotselect;ro
+/my_bigball           erofs     /dev/block/mapper/my_bigball           flags=display="My Bigball";logical;backup=1;slotselect;ro
+/my_manifest          erofs     /dev/block/mapper/my_manifest          flags=display="My Manifest";logical;backup=1;slotselect;ro
 
 ## Data & Cache
-/data                 f2fs      /dev/block/by-name/userdata          flags=display="User Data";wipeingui;backup=1;fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized;keydirectory=/metadata/vold/metadata_encryption;fsverity;fscompress
-/cache                ext4      /dev/block/by-name/oplusreserve2     flags=display="Cache";wipeingui;backup=0
-/metadata             ext4      /dev/block/by-name/metadata          flags=display="Metadata";wipeingui;backup=0
+/data                 f2fs      /dev/block/by-name/userdata            flags=display="User Data";wipeingui;backup=1;fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized;keydirectory=/metadata/vold/metadata_encryption;fsverity;fscompress
+/cache                ext4      /dev/block/by-name/oplusreserve2       flags=display="Cache";wipeingui;backup=0
+/metadata             ext4      /dev/block/by-name/metadata            flags=display="Metadata";wipeingui;backup=0
 
 ## Persistent & Misc
 /misc                 emmc      /dev/block/by-name/misc              flags=display="Misc";backup=0
